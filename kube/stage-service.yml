@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: openeugene-marketing-web
+  namespace: openeugene-marketing-stage
+spec:
+  selector:
+     app: openeugene-marketing
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
