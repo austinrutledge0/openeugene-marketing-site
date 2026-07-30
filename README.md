@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 There are three ways to run this project:
 
 1. Use the Available Scripts
-2. Use Docker
+2. Deploy the frontend to Cloudflare Workers (production) or use Docker for local validation
 3. Use Kubernetes
 
 Be sure to tear down each instance of the run before trying out a different one.
@@ -37,6 +37,14 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+## Cloudflare production deployment
+
+Run `npm run cloudflare:check` to build and validate the static-assets Worker. Run
+`npm run deploy:cloudflare` to publish it independently at `openeugene.austinrutledge.io`. The Docker
+instructions below remain useful for local container validation and are not part of the DigitalOcean
+backend stack. The Wrangler commands require Node.js 22 or newer; the isolated legacy Docker build
+continues to use its tested Node.js 20 toolchain.
+
 ### `npm run eject`
 
 - Don't do this
@@ -47,15 +55,18 @@ Stop the app using ctl+c.
 
 ## Run the App From Docker
 
-### Install the image and container
+### Build the production image
 
-- Install Docker
-- Build the image with `docker build -t openeugene-marketing:0.1.2 .`
+- Install Docker.
+- Build the image with `docker build -t openeugene-marketing:local .`.
 
 ### Run the app
 
-- Run the image with `docker run -p 3000:3000 openeugene-marketing:0.1.2`
-- Open a browser and go to `localhost:3000`
+- Run the image with `docker run --rm -p 3000:80 openeugene-marketing:local`.
+- Open a browser and go to `http://localhost:3000`.
+
+The production image builds the legacy React application in a Node build stage and serves the
+static output from a separate Nginx runtime image. Client-side routes fall back to `index.html`.
 
 ### Close down the app
 

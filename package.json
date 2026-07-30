@@ -34,6 +34,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "cloudflare:check": "npm run build && npx --yes wrangler@4.111.0 deploy --dry-run --config wrangler.jsonc",
+    "deploy:cloudflare": "npm run build && npx --yes wrangler@4.111.0 deploy --config wrangler.jsonc",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
